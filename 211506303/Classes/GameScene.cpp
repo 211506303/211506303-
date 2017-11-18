@@ -1,5 +1,6 @@
 #include "GameScene.h"
 
+#include "CannonLayer.h"
 
 GameScene::GameScene(void)
 {
@@ -33,6 +34,8 @@ bool GameScene::init()
 			break;
 		}
 		this->addChild(fishLayer);
+		CannonLayer * cannonLayer = CannonLayer::create();
+		this->addChild(cannonLayer);
 		menuLayer = MenuLayer::create();
 		CC_BREAK_IF(!menuLayer);
 		CC_SAFE_RETAIN(menuLayer);
@@ -48,11 +51,21 @@ void GameScene::preloadResources(void)
 	spriteFrameCache->addSpriteFramesWithFile("FishActor-Large-ipadhd.plist");
 	spriteFrameCache->addSpriteFramesWithFile("FishActor-Marlin-ipadhd.plist");
 	spriteFrameCache->addSpriteFramesWithFile("FishActor-Shark-ipadhd.plist");
-	spriteFrameCache->addSpriteFramesWithFile("FishActor-Small-ipadhd.plist");
+	spriteFrameCache->addSpriteFramesWithFile("FishActor-Small-ipadhd.plist"); 
 	spriteFrameCache->addSpriteFramesWithFile("FishActor-Mid-ipadhd.plist");
+
+	spriteFrameCache->addSpriteFramesWithFile("cannon-ipadhd.plist");//直接写resources里的文件名
+	spriteFrameCache->addSpriteFramesWithFile("Item-chaojiwuqi-ipadhd.plist");
+
+
+	CCTextureCache *textureCache = CCTextureCache::sharedTextureCache();
+	//textureCache->addImage(STATIC_DATA_STRING("button_add")
+	textureCache->addImage("ui_button_63-ipadhd.png");
+	textureCache->addImage("ui_button_65-ipadhd.png");
+
 	char str[][50]={"SmallFish","Croaker","AngelFish","Amphiprion","PufferS",
 		"Bream","Porgy","Chelonian","Lantern","Ray","Shark","GoldenTrout","GShark",
-		"GMarlinsFish","GrouperFish","JadePerch","MarlinFish","PufferB"};
+		"GMarlinsFish","GrouperFish","JadePerch","MarlinsFish","PufferB"};
 	for(int i = 0;i < 18;i++)
 	{
 		CCArray *array1 = CCArray::createWithCapacity(10);
