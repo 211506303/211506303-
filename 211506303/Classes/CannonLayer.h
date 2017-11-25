@@ -4,6 +4,8 @@
 #define _CANNONLAYER_H
 #include "cocos2d.h"
 #include "Weapon.h"
+#include "Bullet.h"
+#include "FishNet.h"
 class CannonLayer :
 	public CCLayer
 {
@@ -17,6 +19,10 @@ public:
 	CREATE_FUNC(CannonLayer);
 
 	CC_SYNTHESIZE_READONLY(Weapon *,_weapon,Weapon);
+
+	//11-19
+	void aimAt(CCPoint target);
+	void shootTo(CCPoint target);
 protected:
 	cocos2d::CCMenuItemImage *_addMenuItem,*_subMenuItem;
 

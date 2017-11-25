@@ -34,6 +34,9 @@ public:
 	CC_PROPERTY(CannonType,_type,Type);
 	virtual ~Cannon(void);
 
+
+	//11-19
+	void aimAt(CCPoint target);
 protected:
 	CCArray *_cannonSprites;
 };

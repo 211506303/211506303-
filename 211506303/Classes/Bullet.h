@@ -12,6 +12,13 @@ public:
 	
 	CREATE_FUNC(Bullet);
 	bool init();
+
+	//11-19
+	void end();
+	//void flyTo(CCPoint targetInWorldSpace,int type );
+	void flyTo(CCPoint targetInWorldSpace,int type=0);
+	//CCPoint getCollisionPoint();
+
 protected:
 	float getSpeed(int type);
 	CCSprite *_bulletSprite;

@@ -12,7 +12,7 @@
 //{
 //}
 
-Weapon * Weapon::create(CannonType type)
+Weapon *Weapon::create(CannonType type)
 {
 	Weapon *weapon = new Weapon();
 	if(weapon && weapon->init(type))
@@ -75,4 +75,48 @@ Weapon::~Weapon()
 {
 	CC_SAFE_RELEASE(_bullets);
 	CC_SAFE_RELEASE(_fishNets);
+}
+
+
+void Weapon::shootTo(CCPoint target)
+{
+	//CCLOG("1 x = %f y = %f",target.x,target.y);
+	Bullet *bullet = getBulletToShoot();
+	if(bullet == NULL)
+	{
+		return;
+	}
+	CCPoint pointWordSpace = getParent()->convertToWorldSpace(getPosition());
+	float distance = ccpDistance(target,pointWordSpace);
+	if(distance > _cannon->getFireRange())
+	{
+		CCPoint normal = ccpNormalize(ccpSub(target,pointWordSpace));
+		CCPoint mult = ccpMult(normal,_cannon->getFireRange());
+		//CCPoint mult = ccpMult(normal,distance);
+		target = ccpAdd(pointWordSpace,mult);
+	}
+	//CCLOG("2 x = %f y = %f",target.x,target.y);
+	bullet->flyTo(target,_cannon->getType());
+}
+Bullet *Weapon::getBulletToShoot()
+{
+	CCObject *obj;
+	CCARRAY_FOREACH(_bullets,obj)
+	{
+			Bullet *bullet = (Bullet *)obj;
+			if(bullet->isVisible()==false)
+			{
+				return bullet;
+			}
+	}
+	return NULL;
+}
+void Weapon::aimAt(cocos2d::CCPoint target)
+{
+	//CCPoint location = getParent()->convertToWorldSpace(getPosition());
+	//float angle = ccpAngleSigned(ccpSub(target,location),CCPointMake(0,1));
+	//this->setRotation(CC_RADIANS_TO_DEGREES(angle));
+	//CCLOG("targetX:",target.x);
+	//CCLOG("targetY:",target.y);
+	_cannon->aimAt(target);
 }
